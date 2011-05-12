@@ -1,6 +1,7 @@
 import socket, time, sys, urllib, random
 from datetime import date
 from modules import tweety
+import pdb
 
 __Version__ = "0.0.1"
 __Author__  = "B1naryth1ef"
@@ -148,8 +149,8 @@ def wolfram(info,i):
     iz = info.split(" ")
     url1 = "http://www.wolframalpha.com/input/?i="
     url2 = url1+iz[4]
-    url3 = str(url2)+str("]")
-    msg = "Wolfram Alpha ["+url3+url3
+    url3 = str(url2)
+    msg = "Wolfram Alpha: "+url2
     msg2 = msg
     sendc(msg2,i[2])
 
@@ -160,6 +161,7 @@ def yesno(info,i):
     sendc(msg,i[2])
 def magic8(info,i):
     arr = ['definitly','maybe','possibly','never','always']
+    random.shuffle(arr)
     message = "It will "+ str(arr[2])+" happen."
     sendc(str(message),i[2])
 while True:    
@@ -185,38 +187,38 @@ while True:
               #      print "WE HAVE A WINNER!"
                # else:
                 #    pass
-            print "0"+x[0]
-            print "1"+x[1]
-            print "2"+x[2]
-            if x[0] == "!twitter":
+            #print "0"+x[0]
+            #print "1"+x[1]
+            #print "2"+x[2]
+            f = str(x)
+            f.rstrip()
+            if "!twitter" in f:
                 twitterbot(info,i)
-            elif x[0] == "!voice":
+            if "!voice" in f:
                 voice(info)
-            elif x[0] == "!wiki":
+            if "wiki" in f:
                 wiki(info,i)
-            elif x[0] == "!time":
-                print "@TIME"
+            if "!time" in f:
                 timey(info,i)
-            elif x[0] == "!date":
+            if "!date" in f:
                 date(info,i)
-            elif x[0] == "!bot":
-                if x[1] == "op":
-                    botop(info)
-                if x[1] == "quit":
-                    botquit(info)
-                if x[1] == "join":
-                    botjoin(info)
-                if x[1] == "part":
-                    botpart(info)
-            if x[0] == "!wolf":
+            if "!op" in f:
+                botop(info)
+            if "!quit" in f:
+                botquit(info)
+            if "!join" in f:
+                botjoin(info)
+            if "!part" in f:
+                botpart(info)
+            if "!wolf" in f:
                 wolfram(info,i)
-            if x[0] == "!weather":
+            if "!weather" in f:
                 weather(info,i)    
-            if x[0] == "!geo":
+            if "!geo" in f:
                 locaiton(info,i)
-            if x[0] == "!8":
+            if "!yesno" in f:
                 yesno(info,i)
-            if x[0] == "!yesno":
+            if "!8" in f:
                 magic8(info,i)
             if "http" in info:
                 print "HERE"

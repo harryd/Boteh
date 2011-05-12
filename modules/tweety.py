@@ -1,4 +1,8 @@
 import twitter
+c_key = "xQGH2bAsnvtGkK3nrJRLA"
+c_secret = "HfxlAXPN9Oz1rVIzXcfOWVmtxYHWGAEP4K1GVNcdY"
+a_key = "25340639-iWxKLUrtZ6Vao2JcRHCqcw1NBIlBMUGwcbcKC1pWx"
+a_secret = "zr5iWv9PKHFnXcbhvWb65ZNdyqAK9HB8noGoJTk64"
 
 api = twitter.Api(consumer_key=c_key, consumer_secret=c_secret, access_token_key=a_key, access_token_secret=a_secret)
 def getpost_clean(user):

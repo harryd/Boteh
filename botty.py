@@ -1,4 +1,4 @@
-import socket, time, sys, urllib
+import socket, time, sys, urllib, random
 from datetime import date
 from modules import tweety
 
@@ -107,6 +107,7 @@ def botquit(info):
         sendm('Thanks for having me!')
         irc.send ('QUIT\r\n')
         sys.exit()
+        sys.exit() #lolwut?
     else:
         sendm('Must be admin to use !bot commands')
 
@@ -150,15 +151,27 @@ def wolfram(info,i):
     url3 = str(url2)+str("]")
     msg = "Wolfram Alpha ["+url3+url3
     msg2 = msg
-    sendm(msg2)
+    sendc(msg2,i[2])
 
-
+def yesno(info,i):
+    ar = ["Yes","No"]
+    random.shuffle(ar)
+    msg = str(ar[0])
+    sendc(msg,i[2])
+def magic8(info,i):
+    arr = ['definitly','maybe','possibly','never','always']
+    message = "It will "+ str(arr[2])+" happen."
+    sendc(str(message),i[2])
 while True:    
     info = irc.recv(4096)
     print info
-    info2=info.split(":",2) 
-    i = info2[1].split(" ")
-    chalo = str(channel)
+    try:
+        info2=info.split(":",2) 
+        i = info2[1].split(" ")
+        chalo = str(channel)
+        x = info2[2].split(" ")
+    except:
+        pass
     if info.find('PING') !=-1:
         info.split(" ",1)
         senderx = "PONG "+info[1]+"\n"
@@ -167,47 +180,47 @@ while True:
         irc.send(f)
     try:
         if i[2] in chans:
-            if info.find(':!test') != -1:
-                if i[2] == chalo:
-                    print "WE HAVE A WINNER!"
-                else:
-                    pass
-            if info.find(':!twitter') != -1:
-            	twitterbot(info,i)
-
-            if info.find(':!voice') != -1:
-            	voice(info)
-
-            if info.find (':!wiki') != -1:
-            	wiki(info,i)
-
-            if info.find(':!time') != -1:
-            	timey(info,i)
-
-            if info.find(':!date') != -1:
-            	date(info, i)
-
-            if info.find (':!bot quit') != -1:
-            	botquit(info)
-
-            if info.find(':!bot join') != -1:
-                botjoin(info)
-
-            if info.find(':!bot part') != -1:
-                botpart(info)
-
-            if info.find(':!wolf') != -1:
+            #if info.find(':!test') != -1:
+             #   if i[2] == chalo:
+              #      print "WE HAVE A WINNER!"
+               # else:
+                #    pass
+            print "0"+x[0]
+            print "1"+x[1]
+            print "2"+x[2]
+            if x[0] == "!twitter":
+                twitterbot(info,i)
+            elif x[0] == "!voice":
+                voice(info)
+            elif x[0] == "!wiki":
+                wiki(info,i)
+            elif x[0] == "!time":
+                print "@TIME"
+                timey(info,i)
+            elif x[0] == "!date":
+                date(info,i)
+            elif x[0] == "!bot":
+                if x[1] == "op":
+                    botop(info)
+                if x[1] == "quit":
+                    botquit(info)
+                if x[1] == "join":
+                    botjoin(info)
+                if x[1] == "part":
+                    botpart(info)
+            if x[0] == "!wolf":
                 wolfram(info,i)
-                   
-            if info.find(':!weather') !=-1:
-                weather(info,i)
-
-            if info.find(':!bot op') !=-1:
-                botop(info)
-            if info.find(':!geo') !=-1:
-                location(info,i)
+            if x[0] == "!weather":
+                weather(info,i)    
+            if x[0] == "!geo":
+                locaiton(info,i)
+            if x[0] == "!8":
+                yesno(info,i)
+            if x[0] == "!yesno":
+                magic8(info,i)
             if "http" in info:
                 print "HERE"
                 webpage(info,i)
     except:
         pass
+sys.exit()

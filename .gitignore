@@ -1,1 +1,5 @@
 *.pyc
+/example_config.cfg
+/configobj.py
+/config.cfg
+/.gitignore

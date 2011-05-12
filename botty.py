@@ -111,6 +111,9 @@ def botop(info):
 def weather(info):
     sendm(">>>>>>>  404  <<<<<<<")
     sendm("Weather is still WIP. :D")
+def webpage(info):
+    #This will detect for links (http://) and then get the title of them using urllib2
+    pass
 def wolfram(info):
     iz = info.split(" ")
     url1 = "http://www.wolframalpha.com/input/?i="

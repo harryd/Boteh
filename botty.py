@@ -60,7 +60,7 @@ def twitterbot(info):
 		else:
 			x = tweety.twitterx(tweet2)
 			x2 = "[+]",x[0]
-			sendm(x2)     
+			sendm(x)     
 
 #[[A:B1naryth1ef!~b1naryth1@adsl-68-255-109-4.dsl.chcgil.sbcglobal.net PRIVMSG #anapnea2 :!time
 
@@ -74,6 +74,7 @@ while True:
     	twitterbot(info)
     if info.find('ping') !=-1:
     	sender = "PONG", irc.send[1]
+        print sender 
     	irc.send(info)
     if info.find(':!voice') != -1:
     	voice(info)

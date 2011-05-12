@@ -31,8 +31,7 @@ tweet1 = None
 tweet2 = None
 
 def sender(input):
-	xinput = input.split("!")
-	return xinput[0]
+	xinput = input.split("!"); print xinput[0];return xinput[0]
 
 def voice(input):
 	voice = input.split(':!voice')
@@ -97,10 +96,11 @@ while True:
 
     if info.find('PING') !=-1:
         info.split(" ")
-    	sender = "PONG", info[1]
-        print sender
+    	senderx = "PONG", info[1]
+        print senderx
         print info[1] 
-    	irc.send(sender)
+        f = str(senderx)
+    	irc.send(f)
 
     if info.find(':!voice') != -1:
     	voice(info)

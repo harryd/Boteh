@@ -128,12 +128,9 @@ while True:
     	twitterbot(info)
 
     if info.find('PING') !=-1:
-        info.split(" ")
-    	senderx = "PONG"
+        info.split(" ",1)
+    	senderx = "PONG "+info[1]+"\n"
         print senderx
-        print info 
-        print "[0]"+info[0]
-        print "[1]"+info[1]
         f = str(senderx)
     	irc.send(f)
 

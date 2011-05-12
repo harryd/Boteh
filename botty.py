@@ -58,7 +58,7 @@ def date(info):
 		sendm('[+]  Date: '+time.strftime("%a, %b %d, %y", time.localtime()))
 
 def twitterbot(info):
-	if info.find ('!twitter') !=-1:
+    try:
 		tweet1 = info.split(":!twitter")
 		tweet2 = tweet1[1].strip()
 		if len(tweet2) < 1:
@@ -67,7 +67,8 @@ def twitterbot(info):
 			x = tweety.twitterx(tweet2,ck,cs,ak,asx)
 			x2 = "[+]",x[0]
 			sendm(x)  
-               
+    except:
+        sendm('[+] Error: Not a valid entry. Twitter Example: !twitter USERNAME')       
 def botjoin(info):
     x = sender(info)
     if x in admins:
@@ -104,7 +105,6 @@ def botop(info):
         msgx = "OP "+ch+" "+usr+"\r\n" 
         msgx2 = msgx
         irc.send(msgx2)
-        sys.exit()
     else:
         sendm('Must be admin to use !bot commands')
 
@@ -157,9 +157,11 @@ while True:
 
     if info.find('!bot part') != -1:
         botpart(info)
+
     if info.find('!wolf') != -1:
-        wolfram(info)   
+        wolfram(info)
+           
     if info.find('!weather') !=-1:
         weather(info)
     if info.find('!bot op') !=-1:
-        botjoin(info)
+        botop(info)

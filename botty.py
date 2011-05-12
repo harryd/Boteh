@@ -1,16 +1,19 @@
-
-import socket
-import time
+import socket, time, sys
 from datetime import date
 from modules import tweety
-import sys
+from configobj import ConfigObj
 
+__Version__ = "0.0.1"
+__Author__  = "B1naryth1ef"
 
 admins = [":B1naryth1ef", ":HarryD"]
 network = 'irc.freenode.net'
-channel = '#anapnea2'
+channel = '#wocurt'
 nick = 'B1narysB0tty'
-
+ck = "xQGH2bAsnvtGkK3nrJRLA"
+cs = "HfxlAXPN9Oz1rVIzXcfOWVmtxYHWGAEP4K1GVNcdY"
+ak = "25340639-iWxKLUrtZ6Vao2JcRHCqcw1NBIlBMUGwcbcKC1pWx"
+asx = "zr5iWv9PKHFnXcbhvWb65ZNdyqAK9HB8noGoJTk64"
 
 def sendm(msg):
     irc.send('PRIVMSG '+channel+' :'+str(msg)+'\r\n')
@@ -37,14 +40,15 @@ def voice(input):
 	voice = input.split(':!voice')
 	voices= voice[1].strip()
 	irc.send('MODE '+str(channel) +' +v '+str(voices) +'\r\n')
-def wiki(info):
 
+def wiki(info):
 	wiki = info.split(":!wiki")
 	wikis=wiki[1].strip()
 	if len(wikis) < 1:
 		sendm('[+] Error: Example : !wiki Britney')
 	else:
 		sendm('[+] Wiki: : http://www.wikipedia.org/wiki/'+str(wikis))
+
 def timey(info):
 	if info.find (':!time') != -1:
 		sendm('[+]  Time: '+time.strftime("%H:%M:%S", time.localtime()))
@@ -52,6 +56,7 @@ def timey(info):
 def date(info):
 	if info.find (':!date') != -1:
 		sendm('[+]  Date: '+time.strftime("%a, %b %d, %y", time.localtime()))
+
 def twitterbot(info):
 	if info.find ('!twitter') !=-1:
 		tweet1 = info.split(":!twitter")
@@ -59,35 +64,63 @@ def twitterbot(info):
 		if len(tweet2) < 1:
 			sendm('[+] Error: Twitter Example: !twitter USERNAME') 
 		else:
-			x = tweety.twitterx(tweet2)
+			x = tweety.twitterx(tweet2,ck,cs,ak,asx)
 			x2 = "[+]",x[0]
-			sendm(x)     
+			sendm(x)  
+               
 def botjoin(info):
     x = sender(info)
     if x in admins:
         chx = info.split(" ")
         ch = chx[5]
+        msg = "Joining channel "+ch
+        sendm(msg)
         irc.send ('JOIN '+str(ch)+'\r\n')
+
 def botpart(info):
     x = sender(info)
     if x in admins:
         chx = info.split(" ")
         ch = chx[5]
+        msg = "Parting channel "+ch
+        sendm(msg)
         irc.send ('PART '+str(ch)+'\r\n')
+
 def botquit(info):
     x = sender(info)
     if x in admins:
-        irc.send ('Thanks for having me!')
+        sendm('Thanks for having me!')
         irc.send ('QUIT\r\n')
         sys.exit()
     else:
         sendm('Must be admin to use !bot commands')
+
+def botop(info):
+    x = sender(info)
+    if x in admins:
+        chx = info.split(" ")
+        ch = chx[5]
+        usr = chx[6]
+        msgx = "OP "+ch+" "+usr+"\r\n" 
+        msgx2 = msgx
+        irc.send(msgx2)
+        sys.exit()
+    else:
+        sendm('Must be admin to use !bot commands')
+
+def weather(info):
+    sendm(">>>>>>>  404  <<<<<<<")
+    sendm("Weather is still WIP. :D")
 def wolfram(info):
     iz = info.split(" ")
     url1 = "http://www.wolframalpha.com/input/?i="
     url2 = url1+iz[4]
-    msg = "Wolfram Alpha ["+str(url2)+"] "
-    sendm(msg)
+    url3 = str(url2)+str("]")
+    msg = "Wolfram Alpha ["+url3+url3
+    msg2 = msg
+    sendm(msg2)
+
+
 while True:
     info = irc.recv(4096)
     print info
@@ -96,9 +129,11 @@ while True:
 
     if info.find('PING') !=-1:
         info.split(" ")
-    	senderx = "PONG", info[1]
+    	senderx = "PONG"
         print senderx
-        print info[1] 
+        print info 
+        print "[0]"+info[0]
+        print "[1]"+info[1]
         f = str(senderx)
     	irc.send(f)
 
@@ -127,3 +162,7 @@ while True:
         botpart(info)
     if info.find('!wolf') != -1:
         wolfram(info)   
+    if info.find('!weather') !=-1:
+        weather(info)
+    if info.find('!bot op') !=-1:
+        botjoin(info)

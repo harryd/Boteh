@@ -125,17 +125,22 @@ def botop(info):
 def weather(info,i):
     sendc(">>>>>>>  404  <<<<<<<",i[2])
     sendc("Weather is still WIP. :D",i[2])
+
 def webpage(info,i): 
     info2=info.split(":",2)
     uri = str(info2[2])
-    print "1"
-    u = urllib.urlopen(uri)
-    print "2"
-    infox = u.info()
-    u.close()
-    print "3"
-    msg = "Header for "+info2[2]+" ["+infox+" ]"
-    print i[2]
+def location(info,i):
+    print "Here"
+    chx = info.split(" ")
+    ip = chx[5]
+    print IP
+    local = "http://api.hostip.info/get_html.php?ip="+ip+"&position=true"
+    response = urllib.urlopen(local).read()
+    print response
+    msg = response
+    print msg
+    sendc(msg,i[2])
+    msg = "Format: !geo IP"
     sendc(msg,i[2])
 
 def wolfram(info,i):
@@ -145,7 +150,7 @@ def wolfram(info,i):
     url3 = str(url2)+str("]")
     msg = "Wolfram Alpha ["+url3+url3
     msg2 = msg
-    sendc(msg2,i[2])
+    sendm(msg2)
 
 
 while True:    
@@ -154,6 +159,12 @@ while True:
     info2=info.split(":",2) 
     i = info2[1].split(" ")
     chalo = str(channel)
+    if info.find('PING') !=-1:
+        info.split(" ",1)
+        senderx = "PONG "+info[1]+"\n"
+        print senderx
+        f = str(senderx)
+        irc.send(f)
     try:
         if i[2] in chans:
             if info.find(':!test') != -1:
@@ -163,13 +174,6 @@ while True:
                     pass
             if info.find(':!twitter') != -1:
             	twitterbot(info,i)
-
-            if info.find('PING') !=-1:
-                info.split(" ",1)
-                senderx = "PONG "+info[1]+"\n"
-                print senderx
-                f = str(senderx)
-                irc.send(f)
 
             if info.find(':!voice') != -1:
             	voice(info)
@@ -200,6 +204,8 @@ while True:
 
             if info.find(':!bot op') !=-1:
                 botop(info)
+            if info.find(':!geo') !=-1:
+                location(info,i)
             if "http" in info:
                 print "HERE"
                 webpage(info,i)

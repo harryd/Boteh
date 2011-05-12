@@ -86,7 +86,7 @@ def wolfram(info):
     iz = info.split(" ")
     url1 = "http://www.wolframalpha.com/input/?i="
     url2 = url1+iz[4]
-    msg = "Wolfram Alpha for "+iz+" ["+url2+"] "
+    msg = "Wolfram Alpha ["+str(url2)+"] "
     sendm(msg)
 while True:
     info = irc.recv(4096)
@@ -125,4 +125,5 @@ while True:
 
     if info.find('!bot part') != -1:
         botpart(info)
-    
+    if info.find('!wolf') != -1:
+        wolfram(info)   
